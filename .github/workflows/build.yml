@@ -1,3 +1,4 @@
+# CI build workflows for kamevpn, copied from ninjashield-ci.
 name: build
 
 env:
