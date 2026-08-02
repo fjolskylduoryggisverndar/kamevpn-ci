@@ -1,4 +1,3 @@
-# CI build workflows for kamevpn, copied from ninjashield-ci.
 name: build
 
 env:
@@ -15,6 +14,16 @@ on:
     inputs:
       publish_to_stores:
         description: 'Publish signed builds to the store accounts'
+        required: false
+        default: false
+        type: boolean
+      publish_ios_testflight:
+        description: 'Upload the iOS build to TestFlight (macOS pkg + Windows store steps stay off)'
+        required: false
+        default: false
+        type: boolean
+      publish_macos_testflight:
+        description: 'Upload the macOS build to TestFlight (needs the Mac Installer Distribution secrets)'
         required: false
         default: false
         type: boolean
@@ -77,4 +86,6 @@ jobs:
       pkg: ${{ needs.check-for-version.outputs.pkg }}
       version: ${{ needs.check-for-version.outputs.version }}
       publish_to_stores: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_to_stores || false }}
+      publish_ios_testflight: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_ios_testflight || false }}
+      publish_macos_testflight: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_macos_testflight || false }}
     secrets: inherit
